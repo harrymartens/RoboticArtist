@@ -1,0 +1,13 @@
+setup.py
+initialisation/ImagePreProcessing.py
+initialisation/__init__.py
+lineExtraction/WaypointDetermination.py
+lineExtraction/__init__.py
+robotControl/__init__.py
+robotControl/moveRobot.py
+roboticPipeline.egg-info/PKG-INFO
+roboticPipeline.egg-info/SOURCES.txt
+roboticPipeline.egg-info/dependency_links.txt
+roboticPipeline.egg-info/top_level.txt
+shading/BackgroundThresholding.py
+shading/__init__.py
