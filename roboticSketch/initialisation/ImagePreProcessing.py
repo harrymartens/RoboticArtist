@@ -40,13 +40,9 @@ def apply_gaussian_smoothing(image, sigma=1):
     return smoothed_image
 
 
-def preprocess_image(image_path):
-    image = load_image(image_path)
+def preprocess_image(image):
     
     scaled_image = scale_image(image, 500, 500)
-    
     gray_image = to_grayscale(scaled_image)
-    
     smoothed_image = apply_gaussian_smoothing(gray_image)
-    
     return smoothed_image

@@ -3,7 +3,8 @@ from xarm.wrapper import XArmAPI
 class RoboticArm:
     def __init__(self, ip='192.168.1.111'):
         self.api = XArmAPI(ip)
-        self.zLowered=137
+        # self.zLowered=138
+        self.zLowered=145.5
         self.zRaised=152
         self.roll=0
         self.pitch = 200

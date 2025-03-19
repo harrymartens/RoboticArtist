@@ -35,8 +35,13 @@ def findConnectedComponents(line_image):
     canvas = np.zeros((line_image.shape[0], line_image.shape[1], 3), dtype=np.uint8)
     for contour in component_contours.values():
         cv.drawContours(canvas, [contour], -1, (random.randint(100, 255), random.randint(100, 255), random.randint(100, 255)), 1)
+        
+        
     cv.imshow("Component Outlines", canvas)
     cv.waitKey(0)
     cv.destroyAllWindows()
+    
+    return component_contours
+    
 
     
