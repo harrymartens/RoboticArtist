@@ -1,4 +1,0 @@
-initialisation
-lineExtraction
-robotControl
-shading
