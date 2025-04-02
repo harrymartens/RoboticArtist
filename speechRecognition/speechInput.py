@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 
 import pyaudio
-
-import io
 from google.oauth2 import service_account
 from google.cloud import speech
+
+
+from alive_progress import alive_bar
+
+
 
 client_file = 'config/service-account.json'
 credentials = service_account.Credentials.from_service_account_file(client_file)
@@ -24,14 +27,17 @@ def recognizeSpeech():
                 input=True,
                 frames_per_buffer=CHUNK)
 
-    print("* Recording...")
     
     frames = []
-    for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
+    with alive_bar(int(RATE / CHUNK * RECORD_SECONDS), title="Recording for 5 seconds", spinner="horizontal") as bar:
+        for _ in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+            data = stream.read(CHUNK)
+            frames.append(data)
+            bar()
 
-    print("* Done recording")
+    print("Done recording")
+    
+    
     stream.stop_stream()
     stream.close()
     p.terminate()

@@ -5,7 +5,7 @@ import random
 from abc import ABC, abstractmethod
 from xarm.wrapper import XArmAPI
 from roboticMovement.emotions import EmotionHappy
-from roboticMovement.shapes import Shape, Location, Triangle, Square, Circle, Dot, Line, Rectangle, Polygon, Spiral, Star, Cube, ConcentricCircles, RandomDotsPattern, GridPattern
+from archive.shapes import Shape, Location, Triangle, Square, Circle, Dot, Line, Rectangle, Polygon, Spiral, Star, Cube, ConcentricCircles, RandomDotsPattern, GridPattern
 from roboticMovement.robotConfig import RoboticArm  
 
 

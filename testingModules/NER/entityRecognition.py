@@ -8,7 +8,7 @@ from collections import deque
 import json
 import re
 from spacy.util import minibatch, compounding
-from roboticMovement.shapes import (
+from archive.shapes import (
     Circle, Triangle, Square, Dot, Line, Rectangle, Polygon, Spiral, Star, Cube, 
     ConcentricCircles, RandomDotsPattern, GridPattern
 )

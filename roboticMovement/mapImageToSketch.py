@@ -47,15 +47,14 @@ def map_pixel_to_robot(pixel, image_width, image_height, min_x, max_x, min_y, ma
     return int(x_robot), int(y_robot)
 
 
-def executeDrawingCommands(arm, component_contours, image_width=500, image_height=500):
+def executeDrawingCommands(arm, segments, image_width=500, image_height=500):
     """
-    Given a dictionary (from findConnectedComponents) of contours,
-    this function maps each pixel coordinate to the robot's drawing area and sends
-    movement commands to the robot via its set_position method.
+    Given a list of segments (from our edge extraction), this function maps each pixel coordinate 
+    to the robot's drawing area and sends movement commands to the robot via its set_position method.
     
     Parameters:
       arm: Instance of RoboticArm.
-      component_contours: Dictionary mapping component labels to contours (NumPy arrays).
+      segments: List of segments; each segment is an ordered list of (x, y) tuples.
       image_width: Width of the image in pixels (default 500).
       image_height: Height of the image in pixels (default 500).
     """
@@ -65,23 +64,27 @@ def executeDrawingCommands(arm, component_contours, image_width=500, image_heigh
     drawing_min_y = -117
     drawing_max_y = 150
 
-    for contour in component_contours.values():
-        # Get the first point of the contour and convert it to robot coordinates.
-        first_pt = contour[0][0]  # contour shape: (N,1,2)
+    for seg in segments:
+        if not seg:
+            continue  # Skip empty segments
+        
+        print(f"Segment: {seg}")
+        # Get the first point of the segment and convert it to robot coordinates.
+        first_pt = seg[0]  # Each point is now a tuple (x, y)
         start_x, start_y = map_pixel_to_robot(first_pt, image_width, image_height,
                                                 drawing_min_x, drawing_max_x,
                                                 drawing_min_y, drawing_max_y)
         # Move to the start point with the pen raised.
         arm.set_position(start_x, start_y, draw=False)
         
-        # Now iterate over each point in the contour.
-        for point in contour:
-            pt = point[0]  # Extract the [x, y] coordinate.
+        # Now iterate over each point in the segment.
+        for pt in seg:
+            print(f"Point: {pt}")
             x_robot, y_robot = map_pixel_to_robot(pt, image_width, image_height,
                                                   drawing_min_x, drawing_max_x,
                                                   drawing_min_y, drawing_max_y)
             # Move with the pen down to draw the line.
             arm.set_position(x_robot, y_robot, draw=True)
         
-        # After finishing the component, lift the pen.
+        # After finishing the segment, lift the pen.
         arm.set_position(x_robot, y_robot, draw=False)

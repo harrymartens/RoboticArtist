@@ -5,6 +5,19 @@ from scipy.ndimage import gaussian_filter
 import matplotlib.pyplot as plt
 import math
 
+def show_image(img, image_name="Img"):
+    cv2.imshow(image_name, img)
+    cv2.waitKey(1)
+    response = input("Draw this image? (Y/N): ")
+    cv2.destroyAllWindows()
+    return response.lower() == 'y'
+  
+def displayImages(image1, image2):
+    scaledImage1 = scale_image(image1, 500, 500)
+    scaledImage2 = scale_image(image2, 500, 500)
+    imageStack = np.hstack((scaledImage1, scaledImage2))
+    return show_image(imageStack, "Generated Image -- Line Image")
+
 
 def load_image(image_path):
     image = cv2.imread(image_path)
@@ -38,6 +51,9 @@ def scale_image(image, target_width=200, target_height=200):
 def apply_gaussian_smoothing(image, sigma=1):
     smoothed_image = cv2.GaussianBlur(image, (5, 5), sigma)
     return smoothed_image
+
+def canny_lines(img):
+    return cv2.Canny(img, 50, 100)
 
 
 def preprocess_image(image):
